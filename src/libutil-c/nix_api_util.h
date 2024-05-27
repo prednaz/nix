@@ -164,7 +164,7 @@ nix_err nix_libutil_init(nix_c_context * context);
 /**
  * @brief Retrieves a setting from the nix global configuration.
  *
- * This function requires nix_libutil_init() to be called at least once prior to
+ * This function requires nix_libstore_init() to be called at least once prior to
  * its use.
  *
  * @param[out] context optional, Stores error information
