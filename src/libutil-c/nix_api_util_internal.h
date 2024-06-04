@@ -4,16 +4,7 @@
 #include <string>
 #include <optional>
 
-#include "error.hh"
 #include "nix_api_util.h"
-
-struct nix_c_context
-{
-    nix_err last_err_code = NIX_OK;
-    std::optional<std::string> last_err = {};
-    std::optional<nix::ErrorInfo> info = {};
-    std::string name = "";
-};
 
 nix_err nix_context_error(nix_c_context * context);
 

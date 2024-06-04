@@ -1,5 +1,11 @@
 #ifndef NIX_API_UTIL_H
 #define NIX_API_UTIL_H
+
+#include <string>
+#include <optional>
+
+#include "error.hh"
+
 /**
  * @defgroup libutil libutil
  * @brief C bindings for nix libutil
@@ -98,6 +104,14 @@ typedef int nix_err;
  */
 #define NIX_ERR_NIX_ERROR -4
 
+struct nix_c_context
+{
+    nix_err last_err_code = NIX_OK;
+    std::optional<std::string> last_err = {};
+    std::optional<nix::ErrorInfo> info = {};
+    std::string name = {};
+};
+
 /**
  * @brief This object stores error state.
  * @struct nix_c_context
@@ -137,6 +151,7 @@ typedef void (*nix_get_string_callback)(const char * start, unsigned int n, void
  * `nix_c_context_free`.
  */
 nix_c_context * nix_c_context_create();
+nix_c_context nix_c_context_create_on_stack();
 /**
  * @brief Free a nix_c_context. Does not fail.
  * @param[out] context The context to free, mandatory.
@@ -145,6 +160,7 @@ void nix_c_context_free(nix_c_context * context);
 /**
  *  @}
  */
+void nix_c_context_free_from_stack(nix_c_context * context);
 
 /**
  * @brief Initializes nix_libutil and its dependencies.

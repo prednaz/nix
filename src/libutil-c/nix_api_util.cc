@@ -12,11 +12,23 @@ nix_c_context * nix_c_context_create()
     return new nix_c_context();
 }
 
+nix_c_context nix_c_context_create_on_stack()
+{
+    return {};
+}
+
 void nix_c_context_free(nix_c_context * context)
 {
     delete context;
 }
 
+void nix_c_context_free_from_stack(nix_c_context * context)
+{
+    // no need to destruct `int last_err_code`
+    context->last_err.~optional();
+    context->info.~optional();
+    context->name.~basic_string();
+}
 nix_err nix_context_error(nix_c_context * context)
 {
     if (context == nullptr) {
