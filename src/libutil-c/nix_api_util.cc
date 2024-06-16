@@ -19,16 +19,18 @@ nix_c_context nix_c_context_create_on_stack()
 
 void nix_c_context_free(nix_c_context * context)
 {
+    nix_c_context_free_from_stack(context);
     delete context;
 }
 
 void nix_c_context_free_from_stack(nix_c_context * context)
 {
-    // no need to destruct `int last_err_code`
-    context->last_err.~optional();
-    context->info.~optional();
-    context->name.~basic_string();
+    // `int last_err_code` is no pointer.
+    delete context->last_err;
+    delete context->info;
+    delete context->name;
 }
+
 nix_err nix_context_error(nix_c_context * context)
 {
     if (context == nullptr) {

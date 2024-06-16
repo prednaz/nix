@@ -107,9 +107,9 @@ typedef int nix_err;
 struct nix_c_context
 {
     nix_err last_err_code = NIX_OK;
-    std::optional<std::string> last_err = {};
-    std::optional<nix::ErrorInfo> info = {};
-    std::string name = {};
+    std::optional<std::string> * last_err = {};
+    std::optional<nix::ErrorInfo> * info = {};
+    std::string * name = {};
 };
 
 /**

@@ -1,9 +1,6 @@
 #ifndef NIX_API_UTIL_INTERNAL_H
 #define NIX_API_UTIL_INTERNAL_H
 
-#include <string>
-#include <optional>
-
 #include "nix_api_util.h"
 
 nix_err nix_context_error(nix_c_context * context);

@@ -12,17 +12,16 @@ protected:
 
     nix_api_util_context()
     {
-        ctx = nix_c_context_create();
+        ctx = nix_c_context_create_on_stack();
         nix_libutil_init(ctx);
     };
 
     ~nix_api_util_context() override
     {
-        nix_c_context_free(ctx);
-        ctx = nullptr;
+        nix_c_context_free_from_stack(&ctx);
     }
 
-    nix_c_context * ctx;
+    nix_c_context ctx;
 
     inline void assert_ctx_ok()
     {
